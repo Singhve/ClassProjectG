@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Quotes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css">
+</head>
+
+<body>
+<nav class="navbar navbar-light navbar-expand-md">
+    <div class="container-fluid"><a
+            class="navbar-brand">Welcome {{ loggedInUser.first_name }} {{ loggedInUser.last_name }}!</a>
+        <div class="collapse navbar-collapse d-lg-flex justify-content-lg-end" id="navcol-1">
+            <ul class="nav navbar-nav">
+                <li class="nav-item"><a class="nav-link active" href="/myaccount/{{ loggedInUser.id }}">Edit My
+                    Account</a></li>
+                <li class="nav-item"><a class="nav-link text-danger" href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Quotes</h1>
+                {% for eachObj in quotesLeft %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ eachObj.author }}</h4>
+                            <p class="card-text">{{ eachObj.content }}</p>
+                            <a href="/user/{{ eachObj.poster.id }}"> {{ eachObj.poster.first_name }} {{ eachObj.poster.last_name }}
+                                is the creator of this post</a><br><br>
+                            <a>{{ eachObj.likes.all|length }} have liked this post.</a>
+                            <a href="/likeme/{{ eachObj.id }}" class="btn btn-primary" type="button">Like</a>
+                            <a href="/unlikeme/{{ eachObj.id }}" class="btn btn-primary bg-danger text-white" type="button">Unlike</a>
+
+                            {% if eachObj.poster == loggedInUser %}
+                                <a href="/delete/{{ eachObj.id }}" class="button btn btn-outline-danger" type="submit">Delete</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                <form action="/addpost" method="post" class="d-flex d-lg-flex flex-column justify-content-lg-center">
+                    {% csrf_token %}
+                    <label style="font-size: 17px;margin-bottom: 0px;">Add a Quote!</label>
+                    <div class="form-group">
+                        <label style="margin-right: 10px;">Author</label>
+                        <input class="form-control" type="text" name="author" style="margin: 0px;margin-left: 30px;">
+                    </div>
+                    <div class="form-group">
+                        <label style="margin-right: 10px;">Quote&nbsp;</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="desc"
+                                  style="margin-left: 30px; rows="
+                                  3"></textarea>
+                    </div>
+                    <button class="btn btn-primary flex-row m-auto justify-content-lg-start align-items-lg-center"
+                            type="submit">Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

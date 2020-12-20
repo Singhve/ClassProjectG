@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Login Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css">
+</head>
+
+<body>
+<div>
+    <div class="container">
+        {% if messages %}
+            {% for x in messages %}
+                <p style="color: deeppink">{{ x }}</p>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-md-6">
+                <h1 style="color: rgb(65,141,218);">Registration</h1>
+                <form action="/registeruser" method="post">
+                    {% csrf_token %}
+                    <div class="form-group d-flex flex-column">
+                        <label>First Name<input class="form-control" type="text" name="fname"></label>
+                        <label>Last Name<input class="form-control" type="text" name="lname"></label>
+                        <label>Email<input class="form-control" type="text" name="email"></label>
+                        <label>Password<input class="form-control" type="text" name="pw"></label>
+                        <label>Confirm Password<input class="form-control" type="text" name="repw"></label>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Register</button>
+
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h1 style="color: var(--danger);">Login</h1>
+                <form action="login" method="post">
+                    {% csrf_token %}
+                    <div class="form-group d-flex flex-column">
+                        <label>Email<input class="form-control" type="text" name="logemail"></label>
+                        <label>Password<input class="form-control" type="text" name="logpw"></label>
+                    </div>
+                    <button class="btn btn-primary" type="submit" style="background: var(--danger);">Login</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
